@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashScreen">
+
+    <fragment
+        android:id="@+id/splashScreen"
+        android:name="com.shoppitplus.fitlife.SplashScreen"
+        android:label="fragment_splash_screen"
+        tools:layout="@layout/fragment_splash_screen" >
+        <action
+            android:id="@+id/action_splashScreen_to_onboardingScreen"
+            app:destination="@id/onboardingScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/onboardingScreen"
+        android:name="com.shoppitplus.fitlife.OnboardingScreen"
+        android:label="fragment_onboarding_screen"
+        tools:layout="@layout/fragment_onboarding_screen" >
+        <action
+            android:id="@+id/action_onboardingScreen_to_login"
+            app:destination="@id/login" />
+        <action
+            android:id="@+id/action_onboardingScreen_to_signUp"
+            app:destination="@id/signUp" />
+    </fragment>
+    <fragment
+        android:id="@+id/login"
+        android:name="com.shoppitplus.fitlife.Login"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_to_homeScreen"
+            app:destination="@id/homeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUp"
+        android:name="com.shoppitplus.fitlife.SignUp"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUp_to_homeScreen"
+            app:destination="@id/homeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeScreen"
+        android:name="com.shoppitplus.fitlife.HomeScreen"
+        android:label="fragment_home_screen"
+        tools:layout="@layout/fragment_home_screen" >
+        <action
+            android:id="@+id/action_homeScreen_to_expense2"
+            app:destination="@id/expense2" />
+        <action
+            android:id="@+id/action_homeScreen_to_excercise"
+            app:destination="@id/excercise" />
+        <action
+            android:id="@+id/action_homeScreen_to_createRoutine"
+            app:destination="@id/createRoutine" />
+    </fragment>
+    <fragment
+        android:id="@+id/expense2"
+        android:name="com.shoppitplus.fitlife.Expense"
+        android:label="fragment_expense"
+        tools:layout="@layout/fragment_expense" />
+    <fragment
+        android:id="@+id/excercise"
+        android:name="com.shoppitplus.fitlife.Excercise"
+        android:label="fragment_excercise"
+        tools:layout="@layout/fragment_excercise" />
+    <fragment
+        android:id="@+id/createRoutine"
+        android:name="com.shoppitplus.fitlife.CreateRoutine"
+        android:label="fragment_create_routine"
+        tools:layout="@layout/fragment_create_routine" />
+</navigation>
