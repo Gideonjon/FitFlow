@@ -21,17 +21,18 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
+        android:layout_marginTop="42dp"
         android:lineSpacingExtra="22dp"
         android:text="Your Workouk, Your Way"
-        android:layout_marginTop="32dp"
         android:textColor="@color/black"
         android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCreateWallet"
+        android:id="@+id/btnCreateAccount"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
@@ -40,14 +41,14 @@
         android:background="@drawable/btn"
         android:textAllCaps="false"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@id/btnImportWallet"
+        app:layout_constraintBottom_toTopOf="@id/btnLogin"
         android:layout_marginBottom="22dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnImportWallet"
+        android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
@@ -56,7 +57,7 @@
         android:textAllCaps="false"
         android:textSize="14sp"
         android:textColor="@color/black"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="54dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

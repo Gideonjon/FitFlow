@@ -28,7 +28,7 @@
     </fragment>
     <fragment
         android:id="@+id/login"
-        android:name="com.shoppitplus.fitlife.Login"
+        android:name="com.shoppitplus.fitlife.auth.Login"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
@@ -43,6 +43,9 @@
         <action
             android:id="@+id/action_signUp_to_homeScreen"
             app:destination="@id/homeScreen" />
+        <action
+            android:id="@+id/action_signUp_to_login"
+            app:destination="@id/login" />
     </fragment>
     <fragment
         android:id="@+id/homeScreen"
