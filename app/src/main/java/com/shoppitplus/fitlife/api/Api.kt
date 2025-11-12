@@ -1,11 +1,11 @@
 package com.shoppitplus.fitlife.api
 
-import com.shoppitplus.fitlife.utils.LoginRequest
-import com.shoppitplus.fitlife.utils.LoginResponse
-import com.shoppitplus.fitlife.utils.RegisterRequest
-import com.shoppitplus.fitlife.utils.RegistrationResponse
-import com.shoppitplus.fitlife.utils.WorkoutItem
-import com.shoppitplus.fitlife.utils.WorkoutRequest
+import com.shoppitplus.fitlife.models.LoginRequest
+import com.shoppitplus.fitlife.models.LoginResponse
+import com.shoppitplus.fitlife.models.RegisterRequest
+import com.shoppitplus.fitlife.models.RegistrationResponse
+import com.shoppitplus.fitlife.models.WorkoutRequest
+import com.shoppitplus.fitlife.models.WorkoutResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
@@ -20,12 +20,10 @@ interface Api {
     @POST("auth/login")
     suspend fun loginUser(@Body request: LoginRequest): Response<LoginResponse>
 
-    @GET("workouts")
-    suspend fun getWorkouts(): List<WorkoutItem>
-
     @POST("user/workouts")
     fun createWorkout(@Body request: WorkoutRequest): Call<LoginResponse>
 
-
+    @GET("public/workouts")
+    suspend fun getWorkouts(): WorkoutResponse
 
 }

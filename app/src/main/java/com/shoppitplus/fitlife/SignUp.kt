@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.FragmentSignUpBinding
-import com.shoppitplus.fitlife.utils.RegisterRequest
-import com.shoppitplus.fitlife.utils.RegistrationResponse
+import com.shoppitplus.fitlife.models.RegisterRequest
+import com.shoppitplus.fitlife.models.RegistrationResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -41,18 +41,20 @@ class SignUp : Fragment() {
     }
 
     private fun verifyInputs() {
-        val fullName = binding.userNameEt.text.toString().trim()
+        val fullName = binding.fullNameEt.text.toString().trim()
         val regNumber = binding.regNumberEt.text.toString().trim()
         val email = binding.emailEt.text.toString().trim()
         val password = binding.passwordEt.text.toString().trim()
+        val userName = binding.userNameEt.text.toString().trim()
 
         var isValid = true
 
         // Clear old errors
-        binding.userName.error = null
+        binding.fullName.error = null
         binding.regNumber.error = null
         binding.email.error = null
         binding.password.error = null
+        binding.userName.error = null
 
         // ✅ Full Name validation
         if (fullName.isEmpty()) {
@@ -62,6 +64,16 @@ class SignUp : Fragment() {
             binding.userName.error = "Please enter your full name (first and last)"
             isValid = false
         }
+
+        // ✅ Full Name validation
+        if (userName.isEmpty()) {
+            binding.userName.error = "User name is required"
+            isValid = false
+        } else if (!fullName.contains(" ")) {
+            binding.userName.error = "Please enter your username"
+            isValid = false
+        }
+
 
         // ✅ Reg Number validation
         if (regNumber.isEmpty()) {
@@ -96,14 +108,19 @@ class SignUp : Fragment() {
         }
 
         // Proceed to create account
-        registerUser(fullName, regNumber, email, password)
+        registerUser(fullName, regNumber, email, password, userName)
     }
 
-    private fun registerUser(fullName: String, regNumber: String, email: String, password: String) {
+    private fun registerUser(
+        fullName: String,
+        regNumber: String,
+        email: String,
+        password: String,
+        username: String
+    ) {
         binding.progressBar.visibility = View.VISIBLE
         binding.getStarted.isEnabled = false
 
-        val username = email.substringBefore("@") // example username generation
 
         val request = RegisterRequest(
             username = username,
@@ -127,11 +144,19 @@ class SignUp : Fragment() {
                 if (response.isSuccessful && response.body() != null) {
                     val result = response.body()!!
                     Log.d(TAG, "Registration successful: ${result.message}, ID: ${result.userId}")
-                    Toast.makeText(requireContext(), "Account created successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Account created successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     findNavController().navigate(R.id.action_signUp_to_login)
                 } else {
                     Log.e(TAG, "Registration failed: ${response.code()} ${response.message()}")
-                    Toast.makeText(requireContext(), "Registration failed. Try again.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Registration failed. Try again.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
@@ -139,7 +164,8 @@ class SignUp : Fragment() {
                 binding.progressBar.visibility = View.GONE
                 binding.getStarted.isEnabled = true
                 Log.e(TAG, "Error during registration: ${t.message}")
-                Toast.makeText(requireContext(), "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Network error: ${t.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         })
     }

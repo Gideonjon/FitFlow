@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="32dp"
     tools:context=".HomeScreen">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -21,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:text="Kelvin"
+        android:text="Good Morning Kelvin"
         android:textColor="@color/black"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
@@ -29,35 +30,31 @@
         app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/expense"
+    <TextView
+        android:id="@+id/txt_workout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Expense"
+        app:layout_constraintTop_toBottomOf="@id/circleImageView"
+        app:layout_constraintStart_toStartOf="@id/circleImageView"
+        android:text="Excercise You can Try Today"
         android:textColor="@color/black"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:textSize="14sp"
-        android:background="@drawable/btn_stroke"
-        app:layout_constraintEnd_toStartOf="@id/routine"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/circleImageView" />
+        android:fontFamily="sans-serif-medium"
+        android:layout_marginTop="22dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/routine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/expense"
-        android:text="Excercises"
-        android:textColor="@color/white"
-        android:textStyle="normal"
-        android:textAllCaps="false"
-        android:textSize="14sp"
-        android:background="@drawable/btn"
-        app:layout_constraintStart_toEndOf="@id/expense"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewWorkouts"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/expense" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_workout"
+        tools:listitem="@layout/item_workout" />
+
+
+
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

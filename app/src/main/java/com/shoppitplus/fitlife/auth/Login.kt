@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.shoppitplus.fitlife.R
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.FragmentLoginBinding
-import com.shoppitplus.fitlife.utils.LoginRequest
+import com.shoppitplus.fitlife.models.LoginRequest
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -33,11 +33,7 @@ class Login : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedToken = prefs.getString(TOKEN_KEY, null)
-        if (!savedToken.isNullOrEmpty()) {
-            findNavController().navigate(R.id.action_login_to_homeScreen)
-        }
+
 
         binding.arrowBack.setOnClickListener {
             findNavController().popBackStack()

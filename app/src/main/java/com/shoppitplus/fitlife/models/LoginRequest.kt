@@ -1,4 +1,4 @@
-package com.shoppitplus.fitlife.utils
+package com.shoppitplus.fitlife.models
 
 import com.google.gson.annotations.SerializedName
 
