@@ -52,3 +52,10 @@ data class Workout(
     @SerializedName("muscles")
     val muscles: List<String>
 )
+
+data class UserWorkout(
+    val id: Int,
+    val name: String,
+    val description: String,
+    val equipment: List<String>
+)

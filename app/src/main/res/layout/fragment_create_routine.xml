@@ -8,12 +8,13 @@
     android:background="#0A0F0A"
     android:scrollbars="none"
     android:fillViewport="true"
-    android:padding="16dp">
+    android:padding="22dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginTop="32dp"
         tools:context=".CreateRoutine">
 
         <!-- Header -->
@@ -46,6 +47,7 @@
                 android:id="@+id/saveText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="invisible"
                 android:text="Save"
                 android:textColor="#00C896"
                 android:textSize="15sp"
@@ -67,17 +69,24 @@
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_input"
-            android:hint="e.g., Leg Day Annihilator"
+            android:layout_marginTop="12dp"
             android:paddingHorizontal="14dp"
             android:textColor="@android:color/white"
-            android:textColorHint="#8A8A8A" />
+            android:textAllCaps="false"
+            android:textColorHint="#8A8A8A"
+            android:textSize="12sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
+            android:inputType="none"
+            android:hint="Tap to select workout" />
 
         <!-- Routine Description -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dp"
-            android:text="Routine Description (Optional)"
+            android:text="Routine Description"
             android:textColor="@android:color/white"
             android:textSize="14sp" />
 
@@ -87,198 +96,54 @@
             android:layout_height="100dp"
             android:layout_marginBottom="20dp"
             android:background="@drawable/bg_input"
+            android:textSize="12sp"
+            android:layout_marginTop="12dp"
             android:gravity="top"
             android:hint="e.g., Focus on hypertrophy and strength"
             android:padding="14dp"
             android:textColor="@android:color/white"
             android:textColorHint="#8A8A8A" />
 
-        <!-- Exercises -->
-        <TextView
+
+           <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:text="Exercises"
+            android:layout_marginBottom="6dp"
+            android:text="Eqipment"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
-        <!-- Barbell Squats Card -->
-        <LinearLayout
+        <EditText
+            android:id="@+id/equipment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:background="@drawable/bg_card"
-            android:orientation="vertical"
-            android:padding="14dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Barbell Squats"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/deleteSquat"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:tint="#FF6B6B" />
-            </LinearLayout>
-
-            <!-- Upload Image Box -->
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginBottom="10dp"
-                android:background="#2E3742"
-                android:foreground="?attr/selectableItemBackground"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/uploadSquatImage"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    app:tint="#9BA3AF" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:text="Upload Image"
-                    android:textColor="#9BA3AF"
-                    android:textSize="12sp" />
-            </FrameLayout>
-
-            <!-- Equipment Needed -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Equipment Needed"
-                android:textColor="#9BA3AF"
-                android:textSize="13sp" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/EquipmentChip"
-                    android:text="Barbell" />
-
-                <TextView
-                    style="@style/EquipmentChip"
-                    android:layout_marginStart="8dp"
-                    android:text="Squat Rack" />
-            </LinearLayout>
-
-            <!-- Instructions -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instructions"
-                android:textColor="#9BA3AF"
-                android:textSize="13sp" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Stand with your feet shoulder-width apart. Rest the barbell on your upper back. Lower your hips as if sitting in a chair, keeping your chest up and back straight."
-                android:textColor="@android:color/white"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <!-- Dumbbell Lunges Card -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/bg_card"
-            android:orientation="vertical"
-            android:padding="14dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Dumbbell Lunges"
-                    android:textColor="@android:color/white"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/deleteLunge"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    app:tint="#FF6B6B" />
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/lungeImage"
-                android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:layout_marginBottom="10dp"
-                android:background="#2E3742"
-                android:scaleType="centerCrop"/>
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_input"
+            android:gravity="center_vertical"
+            android:padding="14dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#8A8A8A"
+            android:textSize="12sp"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:clickable="true"
+            android:inputType="none"
+            android:hint="Auto-filled from workout" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:text="Equipment Needed"
-                android:textColor="#9BA3AF"
-                android:textSize="13sp" />
 
-            <TextView
-                style="@style/EquipmentChip"
-                android:layout_marginBottom="10dp"
-                android:text="Dumbbells" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Instructions"
-                android:textColor="#9BA3AF"
-                android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Step forward with one leg, lowering your hips until both knees are bent at a 90-degree angle. Push back to the starting position and repeat with the other leg."
-                android:textColor="@android:color/white"
-                android:textSize="13sp" />
-        </LinearLayout>
-
-        <!-- Add Exercise Button -->
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnAddExercise"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="40dp"
-            android:backgroundTint="#00C896"
-            android:drawableLeft="@drawable/baseline_add_24"
             android:drawablePadding="6dp"
+            android:background="@drawable/btn_stroke"
             android:paddingVertical="10dp"
+            android:layout_marginTop="22dp"
             android:text="Add Exercise"
             android:textAllCaps="false"
             android:textColor="@android:color/white" />

@@ -24,7 +24,7 @@ class Login : Fragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
 
-    private val PREFS_NAME = "fitlife_prefs"
+    private val PREFS_NAME = "AppPrefs"
     private val TOKEN_KEY = "auth_token"
 
     override fun onCreateView(

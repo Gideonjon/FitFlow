@@ -87,12 +87,28 @@ object RetrofitClient {
 
     // Helper function to get auth token from SharedPreferences
     private fun getAuthToken(context: Context): String {
-        val sharedPreferences = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
-        val token = sharedPreferences.getString("auth_token", "") ?: ""
+        val prefs = context.getSharedPreferences("AppPrefs", Context.MODE_PRIVATE)
 
-        Log.d("AuthInterceptor", "Retrieved Token: $token") // Add this for debugging
-        return token
+        val possibleKeys = listOf(
+            "auth_token",
+            "token",
+            "access_token",
+            "jwt",
+            "user_token"
+        )
+
+        for (key in possibleKeys) {
+            val t = prefs.getString(key, null)
+            if (!t.isNullOrEmpty()) {
+                Log.d("AuthInterceptor", "Token found using key: $key -> $t")
+                return t
+            }
+        }
+
+        Log.w("AuthInterceptor", "No token found in SharedPreferences")
+        return ""
     }
+
 
 
     // Helper function to get refresh token from SharedPreferences

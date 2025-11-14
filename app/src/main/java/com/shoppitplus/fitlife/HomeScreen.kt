@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.shoppitplus.fitlife.adapter.UserWorkoutAdapter
 import com.shoppitplus.fitlife.adapter.WorkoutAdapter
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.FragmentHomeScreenBinding
+import com.shoppitplus.fitlife.models.Workout
 import com.shoppitplus.fitlife.ui.WorkoutBottomSheet
 import kotlinx.coroutines.launch
 
@@ -20,6 +23,9 @@ class HomeScreen : Fragment() {
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: WorkoutAdapter
+    private var allWorkouts = listOf<Workout>()
+    private lateinit var userWorkoutAdapter: UserWorkoutAdapter
+    private var selectedWorkouts = mutableListOf<Int>()
 
 
     override fun onCreateView(
@@ -31,14 +37,35 @@ class HomeScreen : Fragment() {
         _binding = FragmentHomeScreenBinding.inflate(inflater, container, false)
 
 
-       /* binding.addRoutine.setOnClickListener {
+        binding.addRoutine.setOnClickListener {
             findNavController().navigate(R.id.action_homeScreen_to_createRoutine)
-        }*/
+        }
         adapter = WorkoutAdapter(emptyList()) { workout ->
             WorkoutBottomSheet(workout).show(parentFragmentManager, "WorkoutBottomSheet")
         }
-        binding.recyclerViewWorkouts.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerViewWorkouts.layoutManager = LinearLayoutManager(
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL, false
+        )
         binding.recyclerViewWorkouts.adapter = adapter
+
+        binding.etSearch.addTextChangedListener {
+            filterWorkouts(it.toString())
+        }
+
+        // Horizontal checklist adapter
+        userWorkoutAdapter = UserWorkoutAdapter(emptyList()) { workout, checked ->
+            if (checked) selectedWorkouts.add(workout.id)
+            else selectedWorkouts.remove(workout.id)
+        }
+
+        binding.recyclerViewMyWorkouts.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
+        binding.recyclerViewMyWorkouts.adapter = userWorkoutAdapter
+
+        fetchUserWorkouts()
+
 
         fetchWorkouts()
 
@@ -50,7 +77,13 @@ class HomeScreen : Fragment() {
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.instance(requireContext()).getWorkouts()
-                adapter.updateData(response.workouts)
+
+                // Save the list for searching
+                allWorkouts = response.workouts
+
+                // Update adapter
+                adapter.updateData(allWorkouts)
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(requireContext(), "Failed to load workouts", Toast.LENGTH_SHORT)
@@ -58,6 +91,53 @@ class HomeScreen : Fragment() {
             }
         }
     }
+
+
+    private fun fetchUserWorkouts() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance(requireContext()).getUserWorkouts()
+                userWorkoutAdapter.update(response)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Failed to load your workouts", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+
+    private fun filterWorkouts(query: String) {
+        val q = query.trim().lowercase()
+
+        if (q.isEmpty()) {
+            adapter.updateData(allWorkouts)
+            return
+        }
+
+        val filtered = allWorkouts.filter { workout ->
+
+            // name
+            workout.name.lowercase().contains(q) ||
+
+                    // type
+                    workout.type.lowercase().contains(q) ||
+
+                    // level
+                    workout.level.lowercase().contains(q) ||
+
+                    // equipment (string)
+                    workout.equipment.lowercase().contains(q) ||
+
+                    // instructions
+                    workout.instructions.lowercase().contains(q) ||
+
+                    // muscles (list)
+                    workout.muscles.any { it.lowercase().contains(q) }
+        }
+
+        adapter.updateData(filtered)
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
