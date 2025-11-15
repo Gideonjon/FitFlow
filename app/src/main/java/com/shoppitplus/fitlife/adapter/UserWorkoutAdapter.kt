@@ -55,4 +55,9 @@ class UserWorkoutAdapter(
         list = newList
         notifyDataSetChanged()
     }
+    fun removeItems(ids: List<Int>) {
+        list = list.filter { it.id !in ids }
+        notifyDataSetChanged()
+    }
+
 }

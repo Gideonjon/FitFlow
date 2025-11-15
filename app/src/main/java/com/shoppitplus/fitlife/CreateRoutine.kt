@@ -32,12 +32,10 @@ class CreateRoutine : Fragment() {
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Back
         binding.arrowBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
-        // Open bottom sheet on routineName click
         val openPicker = {
             val bottomSheet = WorkoutPickerBottomSheet { workout ->
                 selectedWorkout = workout
@@ -52,7 +50,6 @@ class CreateRoutine : Fragment() {
 
 
 
-        // (Optional) Add Exercise button handling later
         binding.btnAddExercise.setOnClickListener {
             saveRoutine()
         }
@@ -67,7 +64,6 @@ class CreateRoutine : Fragment() {
 
         val description = binding.routineDescription.text.toString().trim()
 
-        // Convert equipment string to list for the API
         val equipmentList = workout.equipment.split(",")
             .map { it.trim() }
             .filter { it.isNotEmpty() }
@@ -79,9 +75,13 @@ class CreateRoutine : Fragment() {
         )
 
         lifecycleScope.launch {
+            showLoading()
+
             try {
                 val api = RetrofitClient.instance(requireContext())
                 val response = api.saveWorkout(workout.id, request)
+
+                hideLoading()
 
                 if (response.isSuccessful) {
                     Toast.makeText(requireContext(), "Routine saved successfully", Toast.LENGTH_SHORT).show()
@@ -90,11 +90,23 @@ class CreateRoutine : Fragment() {
                     Toast.makeText(requireContext(), "Failed to save routine", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
+                hideLoading()
                 e.printStackTrace()
                 Toast.makeText(requireContext(), "Error saving routine", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.btnAddExercise.isEnabled = false
+    }
+
+    private fun hideLoading() {
+        binding.progressBar.visibility = View.GONE
+        binding.btnAddExercise.isEnabled = true
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -53,11 +53,12 @@ class HomeScreen : Fragment() {
             filterWorkouts(it.toString())
         }
 
-        // Horizontal checklist adapter
         userWorkoutAdapter = UserWorkoutAdapter(emptyList()) { workout, checked ->
-            if (checked) selectedWorkouts.add(workout.id)
-            else selectedWorkouts.remove(workout.id)
+            if (checked) {
+                toggleAndRemove(listOf(workout.id))
+            }
         }
+
 
         binding.recyclerViewMyWorkouts.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -136,6 +137,24 @@ class HomeScreen : Fragment() {
         }
 
         adapter.updateData(filtered)
+    }
+
+    private fun toggleAndRemove(ids: List<Int>) {
+        lifecycleScope.launch {
+            try {
+                val idString = ids.joinToString(",")
+                val response = RetrofitClient.instance(requireContext()).toggleChecklist(idString)
+
+                val removedIds = response.toggled_items.map { it.id }
+
+                userWorkoutAdapter.removeItems(removedIds)
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(requireContext(), "Failed to update checklist", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
     }
 
 
