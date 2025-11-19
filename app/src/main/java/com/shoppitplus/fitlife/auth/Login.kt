@@ -26,6 +26,7 @@ class Login : Fragment() {
 
     private val PREFS_NAME = "AppPrefs"
     private val TOKEN_KEY = "auth_token"
+    private val User_Name = "user_name"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +88,7 @@ class Login : Fragment() {
                     val token = response.body()?.token
 
                     if (!token.isNullOrEmpty()) {
-                        saveUserToken(token)
+                        saveUserToken(token,username)
                         Toast.makeText(requireContext(), "Login successful!", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(R.id.action_login_to_homeScreen)
                     } else {
@@ -108,9 +109,10 @@ class Login : Fragment() {
         }
     }
 
-    private fun saveUserToken(token: String) {
+    private fun saveUserToken(token: String,username: String) {
         val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().putString(TOKEN_KEY, token).apply()
+        prefs.edit().putString(User_Name, username).apply()
         Log.d(ContentValues.TAG, "Token saved successfully: $token")
 
     }

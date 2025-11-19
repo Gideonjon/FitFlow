@@ -7,8 +7,10 @@ import com.shoppitplus.fitlife.databinding.ItemUserWorkoutBinding
 import com.shoppitplus.fitlife.models.UserWorkout
 
 class UserWorkoutAdapter(
-    private var list: List<UserWorkout>,
-    private val onItemChecked: (UserWorkout, Boolean) -> Unit
+    private var list: MutableList<UserWorkout>,
+    private val onItemChecked: (UserWorkout, Boolean) -> Unit,
+    private val onEditClick: (UserWorkout) -> Unit,
+    private val onDeleteSwipe: (UserWorkout) -> Unit
 ) : RecyclerView.Adapter<UserWorkoutAdapter.ViewHolder>() {
 
     private val checkedState = hashMapOf<Int, Boolean>()
@@ -34,7 +36,6 @@ class UserWorkoutAdapter(
 
             checkBoxSelect.isChecked = checkedState[workout.id] ?: false
 
-            // Click anywhere to toggle
             root.setOnClickListener {
                 val newState = !(checkedState[workout.id] ?: false)
                 checkedState[workout.id] = newState
@@ -46,18 +47,25 @@ class UserWorkoutAdapter(
                 checkedState[workout.id] = isChecked
                 onItemChecked(workout, isChecked)
             }
+
+            // EDIT icon click
+            btnEdit.setOnClickListener {
+                onEditClick(workout)
+            }
         }
     }
 
     override fun getItemCount() = list.size
 
     fun update(newList: List<UserWorkout>) {
-        list = newList
-        notifyDataSetChanged()
-    }
-    fun removeItems(ids: List<Int>) {
-        list = list.filter { it.id !in ids }
+        list = newList.toMutableList()
         notifyDataSetChanged()
     }
 
+    fun removeAt(position: Int) {
+        val workout = list[position]
+        onDeleteSwipe(workout)
+        list.removeAt(position)
+        notifyItemRemoved(position)
+    }
 }

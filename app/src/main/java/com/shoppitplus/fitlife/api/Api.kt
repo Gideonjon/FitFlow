@@ -12,9 +12,11 @@ import com.shoppitplus.fitlife.models.WorkoutResponse
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface Api {
@@ -42,5 +44,18 @@ interface Api {
         @Path("ids") ids: String
     ): ToggleResponse
 
+
+    // DELETE user workout
+    @DELETE("users/workouts/{id}")
+    suspend fun deleteUserWorkout(
+        @Path("id") id: Int
+    ): Response<Unit>  // or replace with your response model
+
+    // UPDATE user workout (PUT)
+    @PUT("users/workouts/{id}")
+    suspend fun updateUserWorkout(
+        @Path("id") id: Int,
+        @Body body: Map<String, Any>
+    ): Response<Unit>
 
 }
