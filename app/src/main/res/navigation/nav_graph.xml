@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashScreen"
-        android:name="com.shoppitplus.fitlife.SplashScreen"
+        android:name="com.shoppitplus.fitlife.fragments.SplashScreen"
         android:label="fragment_splash_screen"
         tools:layout="@layout/fragment_splash_screen" >
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/onboardingScreen"
-        android:name="com.shoppitplus.fitlife.OnboardingScreen"
+        android:name="com.shoppitplus.fitlife.fragments.OnboardingScreen"
         android:label="fragment_onboarding_screen"
         tools:layout="@layout/fragment_onboarding_screen" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUp"
-        android:name="com.shoppitplus.fitlife.SignUp"
+        android:name="com.shoppitplus.fitlife.auth.SignUp"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_up" >
         <action
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeScreen"
-        android:name="com.shoppitplus.fitlife.HomeScreen"
+        android:name="com.shoppitplus.fitlife.fragments.HomeScreen"
         android:label="fragment_home_screen"
         tools:layout="@layout/fragment_home_screen" >
         <action
@@ -69,12 +69,12 @@
         tools:layout="@layout/fragment_expense" />
     <fragment
         android:id="@+id/excercise"
-        android:name="com.shoppitplus.fitlife.Excercise"
+        android:name="com.shoppitplus.fitlife.routines.Excercise"
         android:label="fragment_excercise"
         tools:layout="@layout/fragment_excercise" />
     <fragment
         android:id="@+id/createRoutine"
-        android:name="com.shoppitplus.fitlife.CreateRoutine"
+        android:name="com.shoppitplus.fitlife.routines.CreateRoutine"
         android:label="fragment_create_routine"
         tools:layout="@layout/fragment_create_routine" />
 </navigation>

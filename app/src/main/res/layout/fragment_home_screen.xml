@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="32dp"
-    tools:context=".HomeScreen">
+    tools:context=".fragments.HomeScreen">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/circleImageView"
@@ -28,6 +28,19 @@
         app:layout_constraintBottom_toBottomOf="@id/circleImageView"
         app:layout_constraintStart_toEndOf="@id/circleImageView"
         app:layout_constraintTop_toTopOf="@id/circleImageView" />
+
+    <ImageView
+        android:id="@+id/btnShareApp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/ic_share"
+        android:contentDescription="Share App"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:tint="@color/black" />
+
 
     <TextView
         android:id="@+id/txt_workout"

@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="32dp"
-        tools:context=".CreateRoutine">
+        tools:context=".routines.CreateRoutine">
 
         <!-- Header -->
         <LinearLayout

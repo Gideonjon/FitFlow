@@ -1,11 +1,11 @@
-package com.shoppitplus.fitlife
+package com.shoppitplus.fitlife.routines
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.FragmentCreateRoutineBinding
@@ -13,7 +13,6 @@ import com.shoppitplus.fitlife.models.SaveRoutineRequest
 import com.shoppitplus.fitlife.models.Workout
 import com.shoppitplus.fitlife.ui.WorkoutPickerBottomSheet
 import kotlinx.coroutines.launch
-
 
 class CreateRoutine : Fragment() {
    private var _binding: FragmentCreateRoutineBinding? = null
@@ -113,13 +112,3 @@ class CreateRoutine : Fragment() {
         _binding = null
     }
 }
-
-
-
-
-
-
-
-
-
-

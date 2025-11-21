@@ -29,16 +29,15 @@ class WorkoutBottomSheet(private val workout: Workout) : BottomSheetDialogFragme
         val gradient = GradientDrawable(
             GradientDrawable.Orientation.LEFT_RIGHT,
             intArrayOf(
-                0xFF00C896.toInt(), // bright green
-                0xFF007B5E.toInt()  // dark green
+                0xFF00C896.toInt(),
+                0xFF007B5E.toInt()
             )
         ).apply {
-            // Round only top corners
             cornerRadii = floatArrayOf(
-                24f, 24f, // top-left, top-right
-                24f, 24f, // top-right continued (for full radius)
-                0f, 0f,   // bottom-right
-                0f, 0f    // bottom-left
+                24f, 24f,
+                24f, 24f,
+                0f, 0f,
+                0f, 0f
             )
         }
 

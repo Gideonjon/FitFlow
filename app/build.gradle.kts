@@ -68,11 +68,7 @@ dependencies {
     // Navigation View
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-
-    //glide library
-    implementation("com.github.bumptech.glide:glide:4.11.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
-
+    
     //View Model
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.3.0")
@@ -83,10 +79,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5")
 
-
     // latest stable version
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    //Refresh Layout
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
 }

@@ -1,4 +1,4 @@
-package com.shoppitplus.fitlife
+package com.shoppitplus.fitlife.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.shoppitplus.fitlife.R
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.FragmentSignUpBinding
 import com.shoppitplus.fitlife.models.RegisterRequest
@@ -49,14 +50,12 @@ class SignUp : Fragment() {
 
         var isValid = true
 
-        // Clear old errors
         binding.fullName.error = null
         binding.regNumber.error = null
         binding.email.error = null
         binding.password.error = null
         binding.userName.error = null
 
-        // ✅ Full Name validation
         if (fullName.isEmpty()) {
             binding.userName.error = "Full name is required"
             isValid = false
@@ -65,7 +64,6 @@ class SignUp : Fragment() {
             isValid = false
         }
 
-        // ✅ Full Name validation
         if (userName.isEmpty()) {
             binding.userName.error = "User name is required"
             isValid = false
@@ -75,7 +73,6 @@ class SignUp : Fragment() {
         }
 
 
-        // ✅ Reg Number validation
         if (regNumber.isEmpty()) {
             binding.regNumber.error = "Registration number is required"
             isValid = false
@@ -84,7 +81,6 @@ class SignUp : Fragment() {
             isValid = false
         }
 
-        // ✅ Email validation
         if (email.isEmpty()) {
             binding.email.error = "Email is required"
             isValid = false
@@ -93,7 +89,6 @@ class SignUp : Fragment() {
             isValid = false
         }
 
-        // ✅ Password validation
         if (password.isEmpty()) {
             binding.password.error = "Password is required"
             isValid = false
@@ -107,7 +102,6 @@ class SignUp : Fragment() {
             return
         }
 
-        // Proceed to create account
         registerUser(fullName, regNumber, email, password, userName)
     }
 

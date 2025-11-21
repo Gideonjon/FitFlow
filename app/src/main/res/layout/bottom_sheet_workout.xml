@@ -9,7 +9,6 @@
     android:background="@android:color/white"
     android:paddingBottom="16dp">
 
-    <!-- HEADER -->
     <LinearLayout
         android:id="@+id/headerBackground"
         android:layout_width="match_parent"
@@ -38,7 +37,6 @@
             android:layout_marginTop="4dp" />
     </LinearLayout>
 
-    <!-- CONTENT SECTION -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

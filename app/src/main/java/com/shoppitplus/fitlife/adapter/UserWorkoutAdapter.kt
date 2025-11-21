@@ -29,7 +29,6 @@ class UserWorkoutAdapter(
         val workout = list[position]
 
         with(holder.binding) {
-
             tvWorkoutName.text = workout.name
             tvWorkoutDescription.text = workout.description
             tvWorkoutEquipment.text = "Equipment: ${workout.equipment.joinToString(", ")}"
@@ -48,10 +47,7 @@ class UserWorkoutAdapter(
                 onItemChecked(workout, isChecked)
             }
 
-            // EDIT icon click
-            btnEdit.setOnClickListener {
-                onEditClick(workout)
-            }
+            btnEdit.setOnClickListener { onEditClick(workout) }
         }
     }
 

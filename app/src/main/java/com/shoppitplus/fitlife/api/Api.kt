@@ -39,23 +39,23 @@ interface Api {
     @GET("users/workouts")
     suspend fun getUserWorkouts(): List<UserWorkout>
 
-    @PATCH("users/checklist/{ids}")
+    @PATCH("users/checklist/{id}")
     suspend fun toggleChecklist(
-        @Path("ids") ids: String
+        @Path("id") id: Int
     ): ToggleResponse
 
 
-    // DELETE user workout
     @DELETE("users/workouts/{id}")
     suspend fun deleteUserWorkout(
         @Path("id") id: Int
-    ): Response<Unit>  // or replace with your response model
+    ): Response<Unit>
 
-    // UPDATE user workout (PUT)
     @PUT("users/workouts/{id}")
     suspend fun updateUserWorkout(
         @Path("id") id: Int,
-        @Body body: Map<String, Any>
+        @Body body: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
+
+
 
 }
