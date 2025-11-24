@@ -77,4 +77,14 @@
         android:name="com.shoppitplus.fitlife.routines.CreateRoutine"
         android:label="fragment_create_routine"
         tools:layout="@layout/fragment_create_routine" />
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.shoppitplus.fitlife.ContactsFragment"
+        android:label="fragment_contacts"
+        tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/callHistory"
+        android:name="com.shoppitplus.fitlife.CallHistory"
+        android:label="fragment_call_history"
+        tools:layout="@layout/fragment_call_history" />
 </navigation>
