@@ -2,6 +2,8 @@ package com.shoppitplus.fitlife.api
 
 import com.shoppitplus.fitlife.models.LoginRequest
 import com.shoppitplus.fitlife.models.LoginResponse
+import com.shoppitplus.fitlife.models.PaymentResponse
+import com.shoppitplus.fitlife.models.RawWorkoutResponse
 import com.shoppitplus.fitlife.models.RegisterRequest
 import com.shoppitplus.fitlife.models.RegistrationResponse
 import com.shoppitplus.fitlife.models.SaveRoutineRequest
@@ -28,7 +30,7 @@ interface Api {
     suspend fun loginUser(@Body request: LoginRequest): Response<LoginResponse>
 
     @GET("public/workouts")
-    suspend fun getWorkouts(): WorkoutResponse
+    suspend fun getWorkouts(): RawWorkoutResponse
 
     @POST("public/workouts/save/{id}")
     suspend fun saveWorkout(
@@ -56,6 +58,8 @@ interface Api {
         @Body body: Map<String, @JvmSuppressWildcards Any>
     ): Response<Unit>
 
+    @POST("users/paystack/dummy-payment")
+    suspend fun dummyPayment(@Body body: Map<String, String>): Response<PaymentResponse>
 
 
 }

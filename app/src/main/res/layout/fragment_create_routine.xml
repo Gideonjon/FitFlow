@@ -131,6 +131,51 @@
             android:inputType="none"
             android:hint="Auto-filled from workout" />
 
+        <!-- Reminder Date -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reminder Date"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/reminderDate"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_input"
+            android:padding="14dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#8A8A8A"
+            android:hint="Select date"
+            android:focusable="false"
+            android:clickable="true" />
+
+        <!-- Reminder Time -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reminder Time"
+            android:textColor="@android:color/white"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/reminderTime"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/bg_input"
+            android:padding="14dp"
+            android:textColor="@android:color/white"
+            android:textColorHint="#8A8A8A"
+            android:hint="Select time"
+            android:focusable="false"
+            android:clickable="true" />
+
+
 
         <ProgressBar
             android:id="@+id/progressBar"

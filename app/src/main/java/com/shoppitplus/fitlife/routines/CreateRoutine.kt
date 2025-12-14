@@ -13,11 +13,16 @@ import com.shoppitplus.fitlife.models.SaveRoutineRequest
 import com.shoppitplus.fitlife.models.Workout
 import com.shoppitplus.fitlife.ui.WorkoutPickerBottomSheet
 import kotlinx.coroutines.launch
+import android.app.*
+import android.content.Context
+import android.content.Intent
+import java.util.Calendar
 
 class CreateRoutine : Fragment() {
-   private var _binding: FragmentCreateRoutineBinding? = null
+    private var _binding: FragmentCreateRoutineBinding? = null
     private val binding get() = _binding!!
     private var selectedWorkout: Workout? = null
+    private val reminderCalendar = Calendar.getInstance()
 
 
     override fun onCreateView(
@@ -27,9 +32,36 @@ class CreateRoutine : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentCreateRoutineBinding.inflate(inflater, container, false)
 
+        binding.reminderDate.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                { _, year, month, day ->
+                    reminderCalendar.set(year, month, day)
+                    binding.reminderDate.setText("$day/${month + 1}/$year")
+                },
+                reminderCalendar.get(Calendar.YEAR),
+                reminderCalendar.get(Calendar.MONTH),
+                reminderCalendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
+        binding.reminderTime.setOnClickListener {
+            TimePickerDialog(
+                requireContext(),
+                { _, hour, minute ->
+                    reminderCalendar.set(Calendar.HOUR_OF_DAY, hour)
+                    reminderCalendar.set(Calendar.MINUTE, minute)
+                    binding.reminderTime.setText(String.format("%02d:%02d", hour, minute))
+                },
+                reminderCalendar.get(Calendar.HOUR_OF_DAY),
+                reminderCalendar.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
 
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.arrowBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
@@ -55,9 +87,12 @@ class CreateRoutine : Fragment() {
     }
 
     private fun saveRoutine() {
+
+
         val workout = selectedWorkout
         if (workout == null) {
             Toast.makeText(requireContext(), "Please select a workout", Toast.LENGTH_SHORT).show()
+
             return
         }
 
@@ -77,16 +112,44 @@ class CreateRoutine : Fragment() {
             showLoading()
 
             try {
-                val api = RetrofitClient.instance(requireContext())
-                val response = api.saveWorkout(workout.id, request)
+                val response =
+                    RetrofitClient.instance(requireContext()).saveWorkout(workout.id, request)
 
+                if (!response.isSuccessful) {
+                    hideLoading()
+                    Toast.makeText(requireContext(), "Failed to save routine", Toast.LENGTH_SHORT)
+                        .show()
+                    return@launch
+                }
+
+                val paymentResponse = RetrofitClient.instance(requireContext())
+                    .dummyPayment(mapOf("email" to "an4@gmail.com"))
+
+                if (paymentResponse.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        paymentResponse.body()?.message ?: "Payment successful",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                scheduleReminder("Time for your workout: ${workout.name}")
                 hideLoading()
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+
+
 
                 if (response.isSuccessful) {
-                    Toast.makeText(requireContext(), "Routine saved successfully", Toast.LENGTH_SHORT).show()
-                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                    Toast.makeText(
+                        requireContext(),
+                        "Routine saved successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    scheduleReminder("Time for your workout: ${workout.name}")
+
                 } else {
-                    Toast.makeText(requireContext(), "Failed to save routine", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to save routine", Toast.LENGTH_SHORT)
+                        .show()
                 }
             } catch (e: Exception) {
                 hideLoading()
@@ -95,6 +158,36 @@ class CreateRoutine : Fragment() {
             }
         }
     }
+
+    private fun scheduleReminder(message: String) {
+        val alarmManager =
+            requireContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
+
+        val intent = Intent(requireContext(), ReminderReceiver::class.java).apply {
+            putExtra("message", message)
+        }
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            requireContext(),
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            if (!alarmManager.canScheduleExactAlarms()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please allow exact alarms for reminders",
+                    Toast.LENGTH_LONG
+                ).show()
+                return
+            }
+        }
+
+
+    }
+
 
     private fun showLoading() {
         binding.progressBar.visibility = View.VISIBLE

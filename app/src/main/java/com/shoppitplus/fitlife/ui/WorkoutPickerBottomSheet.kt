@@ -14,6 +14,7 @@ import com.shoppitplus.fitlife.adapter.WorkoutPickerAdapter
 import com.shoppitplus.fitlife.api.RetrofitClient
 import com.shoppitplus.fitlife.databinding.BottomSheetWorkoutPickerBinding
 import com.shoppitplus.fitlife.models.Workout
+import com.shoppitplus.fitlife.models.toWorkout
 import kotlinx.coroutines.launch
 
 class WorkoutPickerBottomSheet(
@@ -54,8 +55,12 @@ class WorkoutPickerBottomSheet(
         viewLifecycleOwner.lifecycleScope.launch {
             try {
                 val response = RetrofitClient.instance(requireContext()).getWorkouts()
-                adapter = WorkoutPickerAdapter(response.workouts, onWorkoutSelected)
+
+                val workouts = response.workouts.map { it.toWorkout() }
+
+                adapter = WorkoutPickerAdapter(workouts, onWorkoutSelected)
                 binding.rvWorkouts.adapter = adapter
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 Toast.makeText(requireContext(), "Failed to load workouts", Toast.LENGTH_SHORT).show()

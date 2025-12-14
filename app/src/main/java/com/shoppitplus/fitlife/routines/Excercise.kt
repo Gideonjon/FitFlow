@@ -23,6 +23,7 @@ import com.shoppitplus.fitlife.ui.EditWorkoutBottomSheet
 import com.shoppitplus.fitlife.ui.WorkoutBottomSheet
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import com.shoppitplus.fitlife.models.toWorkout
 
 class Excercise : Fragment() {
    private var _binding: FragmentExcerciseBinding? = null
@@ -127,8 +128,12 @@ class Excercise : Fragment() {
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.instance(requireContext()).getWorkouts()
-                allWorkouts = response.workouts
-                workoutAdapter.updateData(allWorkouts)
+
+                val workouts = response.workouts.map { it.toWorkout() }
+
+                allWorkouts = workouts
+                workoutAdapter.updateData(workouts)
+
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), "Failed to load workouts", Toast.LENGTH_SHORT).show()
             }
